@@ -1,8 +1,37 @@
-# terraform-aws-vpc-peering
 
-# AWS Infrastructure Provisioning with Terraform-aws-vpc-Peering module
+<<p align="center"> <img src="https://user-images.githubusercontent.com/50652676/62349836-882fef80-b51e-11e9-99e3-7b974309c7e3.png" width="100" height="100"></p>
 
-## Table of Contents
+
+<h1 align="center">
+    Terraform AWS   Multi-account-peering
+</h1>
+
+<p align="center" style="font-size: 1.2rem;">
+    Terraform module to create multi-account-peering resource on AWS.
+     </p>
+
+<p align="center">
+
+<a href="https://www.terraform.io">
+  <img src="https://img.shields.io/badge/Terraform-v1.7.0-green" alt="Terraform">
+</a>
+<a href="https://github.com/slovink/terraform-aws-multi-account-peering/blob/master/LICENSE">
+  <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
+</a>
+
+
+
+</p>
+<p align="center">
+
+<a href='https://www.facebook.com/Slovink.in=https://github.com/slovink/terraform-aws-multi-account-peering'>
+  <img title="Share on Facebook" src="https://user-images.githubusercontent.com/50652676/62817743-4f64cb80-bb59-11e9-90c7-b057252ded50.png" />
+</a>
+<a href='https://www.linkedin.com/company/101534993/admin/feed/posts/=https://github.com/slovink/terraform-aws-multi-account-peering'>
+  <img title="Share on LinkedIn" src="https://user-images.githubusercontent.com/50652676/62817742-4e339e80-bb59-11e9-87b9-a1f68cae1049.png" />
+</a>
+
+
 
 - [Introduction](#introduction)
 - [Usage](#usage)
@@ -11,40 +40,37 @@
 - [Examples](#examples)
 - [License](#license)
 
+## Prerequisites
 
-## Introduction
+This module has a few dependencies:
 
-This module is designed for peering two Amazon Virtual Private Clouds (VPCs) using AWS infrastructure. It provides a streamlined way to create a VPC peering connection between two VPCs in the `eu-west-1` region. The module is customizable and can be easily integrated into your Terraform infrastructure.
+- [Terraform 1.x.x](https://learn.hashicorp.com/terraform/getting-started/install.html)
+- [Go](https://golang.org/doc/install)
 
-## Usage
+## Examples
+For detailed examples on how to use this module, please refer to the [Examples](https://github.com/slovink/terraform-aws-multi-account-peering/tree/master/_example) directory within this repository.
 
-To use this module, you should have Terraform installed and configured for AWS. This module provides the necessary Terraform configuration for creating AWS resources, and you can customize the inputs as needed. Below is an example of how to use this module## examples
+## License
+This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/slovink/terraform-aws-multi-account-peering/blob/master/LICENSE) file for more details.
+
+
 
 # Example: default
-```hcl
-module "vpc-peering" {
-  source           = "git::https://github.com/slovink/terraform-aws-vpc-peering.git?ref=v1.0.0"
-  name             = local.name
-  environment      = local.environment
-  requestor_vpc_id = "vpc-045eae4d6b443a318"
-  acceptor_vpc_id  = "vpc-04cb13c74100e2e90"
-}
-```
+  ```hcl
+    module "vpc-peering" {
+      source = "../"
 
-# Example: multi-region
+      name        = "vpc-peering"
+      environment = "test"
+      label_order = ["environment", "name"]
 
-```hcl
-module "vpc-peering" {
-  source           = "git::https://github.com/slovink/terraform-aws-vpc-peering.git?ref=v1.0.0"
-  name             = "vpc-peering"
-  environment      = "prod"
-  label_order      = ["environment", "name"]
-  requestor_vpc_id = "vpc-0dafb7e1998d88788"
-  acceptor_vpc_id  = "vpc-009adfebb640d4509"
-  accept_region    = "us-east-1"
-  auto_accept      = false
-}
-```
+      enable_peering    = true
+      accepter_role_arn = "arn:aws:iam::xxxxxxxxx:role/switch-role"
+      accepter_region   = "us-east-1"
+      requestor_vpc_id  = "vpc-xxxxxxxxxxxx"
+      acceptor_vpc_id   = "vpc-xxxxxxxxxxxx"
+    }
+  ```
 
 ## Module Inputs
 
@@ -65,14 +91,4 @@ This module provides no specific outputs.
 - id - The ID of the VPC Peering Connection.
 - accept_status - The status of the VPC Peering Connection request.
 - tags - (Optional) A map of tags to assign to the resource.
-
-
-## Examples
-For detailed examples on how to use this module, please refer to the [Examples](https://github.com/slovink/terraform-aws-vpc-peering/tree/master/example) directory within this repository.
-
-## License
-This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/slovink/terraform-aws-vpc-peering/blob/master/LICENSE) file for more details.
-
-## Author
-Your Name
-Replace '[License Name]' and '[Your Name]' with the appropriate license and your information. Feel free to expand this README with additional details or usage instructions as needed for your specific use case.
+<!-- END_TF_DOCS -->

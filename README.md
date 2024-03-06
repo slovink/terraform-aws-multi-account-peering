@@ -58,7 +58,7 @@ This Terraform module is provided under the '[License Name]' License. Please see
 # Example: default
   ```hcl
     module "vpc-peering" {
-      source = "../"
+      source = "https://github.com/slovink/terraform-aws-multi-account-peering.git?ref=v1.0.0"
 
       name        = "vpc-peering"
       environment = "test"
